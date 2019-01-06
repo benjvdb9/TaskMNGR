@@ -8,9 +8,4 @@ import { RouterModule } from "@angular/router";
 })
 export class AppComponent {
   title = 'TaskMNGR';
-  Message = '';
-
-  onClickMessage() {
-    this.Message = 'Worked champ!';
-  }
 }
