@@ -1,13 +1,13 @@
 <h1>PROJECTS</h1>
 
 <table id="projects">
-  <tr *ngIf="not_empty; else noprojects">
-    <div *ngFor="let project of projects; let i = index">
+  <div *ngIf="not_empty; else noprojects">
+    <tr *ngFor="let project of projects; let i = index">
       <td width="10%"><img src="assets/SM.png"></td>
-      <td>
+      <td (click)="toTask(project.title)">
         <div id="header">
           <div id="title">
-            <a layout="row" layout-align="start center" [routerLink]="[project.title, '/tasks']">
+            <a layout="row" layout-align="start center">
               {{ project.title }}
             </a>
           </div>
@@ -19,8 +19,8 @@
         </div>
       </td>
       <td width="15%" (click)="toTask(project.title)"><a>{{ project.completion }}</a></td>
-    </div>
-  </tr>
+    </tr>
+  </div>
 
   <ng-template #noprojects>
     <tr ng-if="not_empty">
@@ -29,3 +29,5 @@
   </ng-template>
   <button class="add" (click)="click()">Add Task</button>
 </table>
+
+<h1>{{ message }}</h1>

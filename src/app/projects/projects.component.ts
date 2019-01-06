@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ProjectsComponent implements OnInit {
   projects;
+  message;
   not_empty = true;
   adding_proj = false;
 
@@ -26,6 +27,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   toTask(title) {
+    this.message = title;
     this.router.navigate(["/tasks", { project: title }])
   }
 
