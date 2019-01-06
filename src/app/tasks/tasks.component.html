@@ -7,21 +7,21 @@
   </div>
 </div>
 
-<table id="tasks">
+<table id="tasks" *ngIf="not_empty; else noprojects">
   <tr>
     <th></th>
     <th>{{ project }}</th>
     <th>Click to Complete ↓</th>
   </tr>
-  <tr>
+  <tr *ngFor="let task of tasks; let i = index">
     <td width="10%"><a><img src="assets/SM.png" /></a></td>
     <td>
       <div id="td-header">
         <div id="title">
-          <a>title&nbsp;&nbsp;&nbsp;</a>
+          <a>{{ task.title }}&nbsp;&nbsp;&nbsp;</a>
         </div>
         <div id="link">
-          <a>
+          <a href="{{ task.link }}" *ngIf="task.link">
             <button class="link-button">Link</button>
           </a>    
         </div>
@@ -32,9 +32,18 @@
         </div>
       </div>
     </td>
-    <td><a>???</a></td>
-  </tr>
-  <tr>
-    <td>No Current Tasks</td>
+    <td *ngIf="task.status; else notcomplete"><a>Complete</a></td>
   </tr>
 </table>
+
+<ng-template #notcomplete>
+  <td><a>Uncomplete</a></td>
+</ng-template>
+
+<ng-template #noprojects>
+  <table id="tasks">
+    <tr>
+      <td>No Current Tasks</td>
+    </tr>
+  </table>
+</ng-template>

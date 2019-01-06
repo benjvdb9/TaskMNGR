@@ -6,18 +6,22 @@ import { AppComponent } from './app.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { RouterModule } from '@angular/router';
 import { TasksComponent } from './tasks/tasks.component';
+import { AddprojComponent } from './addproj/addproj.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProjectsComponent,
-    TasksComponent
+    TasksComponent,
+    AddprojComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
-  providers: [],
+  entryComponents: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
