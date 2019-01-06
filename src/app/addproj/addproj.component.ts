@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-addproj',
@@ -8,19 +10,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./addproj.component.css']
 })
 export class AddprojComponent implements OnInit {
-  //json: ProjectJSON;
   default_title = "Add Task";
 
-  constructor(private router: Router) {
-    //this.json = new ProjectJSON();
+  constructor(private router: Router, private http: HttpClient) {}
+
+  postAPI($title) : Observable<any> {
+    console.log("Adding");
+    let url = "http://localhost/Laboweb/public/index.php/api/post/project/" + $title;
+    return this.http.post(url, "");
   }
 
   onSubmit(form: NgForm) {
-    /*this.json.setTitle(form.value.title);
-    this.json.setCompletion(0);
-    this.json.setImage("assets/SM.png");
-    
-    console.log(this.json);*/
+    this.postAPI(form.value.title).subscribe(data => {console.log(data);});
     this.router.navigate(['/Projects']);
   }
 

@@ -5,7 +5,9 @@ img {
     border-radius: 50%;
 }
 
-#title {display:inline-block;}
+#title {
+    display:inline-block;
+}
 
 #delete {
     float: right;

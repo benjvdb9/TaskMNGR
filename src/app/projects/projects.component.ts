@@ -22,11 +22,24 @@ export class ProjectsComponent implements OnInit {
     return this.http.options("http://localhost/Laboweb/public/index.php/api/projects");
   }
 
+  delAPI($title) : Observable<any> {
+    return this.http.options("http://localhost/Laboweb/public/index.php/api/del/project/" + $title);
+  }
+
   getJSON() {
     this.getAPI().subscribe(data => {
       this.projects = data;
+      //this.assertEmpty();
       console.log(this.projects);
     });
+  }
+
+  assertEmpty() {
+    if (this.projects.length == 0) {
+      this.not_empty = false;
+    } else {
+      this.not_empty = true;
+    }
   }
 
   toTask(title) {
@@ -36,6 +49,13 @@ export class ProjectsComponent implements OnInit {
 
   toAddProj() {
     this.router.navigate(["/Add/Project"])
+  }
+
+  delProject($title) {
+    $title.replace(" ", "&§$");
+    console.log('title', $title);
+    this.delAPI($title).subscribe(data => {console.log(data);});
+    this.getJSON();
   }
 
   ngOnInit() {

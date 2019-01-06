@@ -8,16 +8,16 @@
   </tr>
   <tr *ngFor="let project of projects; let i = index">
     <td width="10%"><img src="assets/SM.png"></td>
-    <td (click)="toTask(project.title)">
+    <td>
       <div id="header">
-        <div id="title">
+        <div id="title" (click)="toTask(project.title)">
           <a layout="row" layout-align="start center">
             {{ project.title }}
           </a>
         </div>
         <div id="delete" layout="row" layout-align="end center">
           <a>
-            <button class="del">&#10006;</button>
+            <button class="del" (click)="delProject(project.title)">&#10006;</button>
           </a>
         </div>
       </div>
