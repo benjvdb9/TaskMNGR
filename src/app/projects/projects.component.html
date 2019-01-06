@@ -1,31 +1,36 @@
 <h1>PROJECTS</h1>
 
-<table id="projects">
-  <div *ngIf="not_empty; else noprojects">
-    <tr *ngFor="let project of projects; let i = index">
-      <td width="10%"><img src="assets/SM.png"></td>
-      <td (click)="toTask(project.title)">
-        <div id="header">
-          <div id="title">
-            <a layout="row" layout-align="start center">
-              {{ project.title }}
-            </a>
-          </div>
-          <div id="delete" layout="row" layout-align="end center">
-            <a>
-              <button class="del">&#10006;</button>
-            </a>
-          </div>
+<table id="projects" *ngIf="not_empty; else noprojects">
+  <tr>
+    <th></th>
+    <th>Project</th>
+    <th>Completion</th>
+  </tr>
+  <tr *ngFor="let project of projects; let i = index">
+    <td width="10%"><img src="assets/SM.png"></td>
+    <td (click)="toTask(project.title)">
+      <div id="header">
+        <div id="title">
+          <a layout="row" layout-align="start center">
+            {{ project.title }}
+          </a>
         </div>
-      </td>
-      <td width="15%" (click)="toTask(project.title)"><a>{{ project.completion }}</a></td>
-    </tr>
-  </div>
+        <div id="delete" layout="row" layout-align="end center">
+          <a>
+            <button class="del">&#10006;</button>
+          </a>
+        </div>
+      </div>
+    </td>
+    <td width="15%" (click)="toTask(project.title)"><a>{{ project.completion }}%</a></td>
+  </tr>
 
   <ng-template #noprojects>
-    <tr ng-if="not_empty">
-      <td>No Current Projects</td>
-    </tr>
+    <table id="projects">
+      <tr>
+        <td>No Current Projects</td>
+      </tr>
+    </table>
   </ng-template>
   <button class="add" (click)="click()">Add Task</button>
 </table>
