@@ -3,7 +3,7 @@
     <h1>Tasks</h1>
   </div>
   <div id="percentage">
-    <h2><b>50%</b></h2>
+    <h2><b>{{ percentage }}%</b></h2>
   </div>
 </div>
 
@@ -32,13 +32,12 @@
         </div>
       </div>
     </td>
-    <td *ngIf="task.status; else notcomplete"><a>Complete</a></td>
+    <td (click)="toggleStatus(task.id)" *ngIf="status[task.id]; else notcomplete"><a>Complete</a></td>
+    <ng-template #notcomplete>
+      <td (click)="toggleStatus(task.id)"><a>Uncomplete</a></td>
+    </ng-template>
   </tr>
 </table>
-
-<ng-template #notcomplete>
-  <td><a>Uncomplete</a></td>
-</ng-template>
 
 <ng-template #noprojects>
   <table id="tasks">

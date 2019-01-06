@@ -12,8 +12,10 @@ import { forEach } from '@angular/router/src/utils/collection';
 export class TasksComponent implements OnInit {
   all_tasks = new Array;
   tasks = new Array;
+  status: {[id: number] : boolean} = {};
   project;
-  not_empty = true;
+  not_empty;
+  percentage = 0;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.getJSON();
@@ -24,12 +26,38 @@ export class TasksComponent implements OnInit {
     return this.http.options("http://localhost/Laboweb/public/index.php/api/tasks");
   }
 
+  updateApi($id) : Observable<any> {
+    return this.http.post("http://localhost/Laboweb/public/index.php/api/update/task/" + $id, "");
+  }
+
+  updateCApi($id, $per) : Observable<any> {
+    return this.http.post("http://localhost/Laboweb/public/index.php/api/update/project/" + $id
+    + "/completion/" + $per, "");
+  }
+
   getJSON() {
+    this.tasks = new Array;
     this.getApi().subscribe(data => {
       this.all_tasks = data;
       this.trimJSON();
       this.assertEmpty();
     });
+  }
+
+  trimJSON() {
+    let per = 0;
+    for(let task of this.all_tasks) {
+      if (task.projects.title == this.project) {
+        this.status[task.id] = task.status;
+        this.tasks.push(task);
+        if(task.status) {
+          per += 100;
+        }
+      }
+    }
+    per = Math.round(per / this.tasks.length);
+    this.percentage = per;
+    this.updateCApi(this.project, per).subscribe();
   }
 
   assertEmpty() {
@@ -40,12 +68,22 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  trimJSON() {
-    for(let task of this.all_tasks) {
-      if (task.projects.title == this.project) {
-        this.tasks.push(task);
+  toggleStatus($id) {
+    this.status[$id] = !this.status[$id];
+    this.updateApi($id).subscribe();
+    this.getPercentage();
+  }
+
+  getPercentage() {
+    let perc = 0;
+    for(let key in this.status) {
+      if(this.status[key]) {
+        perc += 100;
       }
     }
+    perc = Math.round(perc / this.tasks.length);
+    this.percentage = perc;
+    this.updateCApi(this.project, perc).subscribe();
   }
 
   ngOnInit() {
